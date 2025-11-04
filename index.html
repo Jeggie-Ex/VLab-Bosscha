@@ -11,13 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- CSS Kustom Eksternal -->
+    <!-- Load CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Konfigurasi Tailwind untuk Dark Mode dan Font -->
     <script>
         tailwind.config = {
-            darkMode: 'class', // Menggunakan 'class' untuk toggle manual
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -28,8 +27,8 @@
         }
     </script>
 </head>
-<body class="text-gray-800 transition-colors duration-300" style="background-image: url('images\bg-angkasa.jpeg'); background-size: cover; background-attachment: fixed; background-position: center;">
-    <!-- Header / Navigasi -->
+<body class="text-gray-800 transition-colors duration-300" style="background-image: url('images/bg-angkasa.jpg'); background-size: cover; background-attachment: fixed; background-position: center;">
+    <!-- Header -->
     <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md fixed top-0 left-0 right-0 z-50 transition-colors duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-gray-900 dark:text-white">
@@ -45,25 +44,19 @@
         </nav>
     </header>
 
-    <!-- Konten Utama -->
+    <!-- Main -->
     <main class="container mx-auto px-6 py-12 pt-0">
-
-        <!-- Bagian Hero / Beranda -->
-        <section id="hero" class="page-section min-h-[calc(100vh-64px)] py-16">
+        <section id="hero" class="page-section min-h-[calc(100vh-64px)] pt-32 pb-16">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-center">Selamat Datang di Observatorium Bosscha</h1>
             <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto text-center">
                 Jelajahi sejarah Observatorium Bosscha melalui linimasa tata surya interaktif ini.
             </p>
-
-            <!-- Teks Instruksi yang dipindah ke tengah -->
             <p class="text-lg text-center text-gray-600 dark:text-gray-400 my-8 font-medium animate-pulse">
                 Gunakan tombol di bawah panel info untuk memulai.
             </p>
-
-            <!-- Grid untuk layout 2 kolom (Desktop) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mt-16 max-w-6xl mx-auto">
                 
-                <!-- Kolom Kiri: Tata Surya -->
+                <!-- Kolom Kiri: Orbit -->
                 <div class="relative w-full">
                     
                     <!-- Kontainer luar (FRAME & BACKGROUND) - DIAM -->
@@ -116,18 +109,16 @@
                                 </div>
                             </div>
                         </div> <!-- End #solar-system-rotator -->
-                    </div> <!-- End .solar-system-container -->
+                    </div>
+                    
                 </div>
-
                 <!-- Kolom Kanan: Panel Info -->
                 <div class="flex flex-col"> <!-- Buat kolom kanan jadi flex container -->
                     <div id="timeline-display" class="dark:bg-gray-800 dark:border-gray-700 flex-grow"> <!-- Panel info -->
                         <div id="timeline-display-year" class="dark:text-blue-400">...</div>
                         <p id="timeline-display-desc" class="dark:text-gray-300">...</p>
                     </div>
-                    
-                    <!-- Tombol Navigasi Timeline DIPINDAHKAN ke sini -->
-                    <div class="flex justify-center space-x-4 mt-6"> <!-- mt-6 untuk jarak dari panel info di atasnya -->
+                    <div class="flex justify-center space-x-4 mt-6">
                         <button id="prev-btn" title="Sebelumnya" class="p-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -145,13 +136,12 @@
             
         </section>
 
-        <!-- Bagian Peta Langit (Stellarium) -->
-        <section id="sky-view" class="page-section hidden min-h-[calc(100vh-64px)] py-16">
+        <!-- Page Sky View (Stellarium) -->
+        <section id="sky-view" class="page-section hidden min-h-[calc(100vh-64px)] pt-32 pb-16">
             <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Peta Langit Interaktif (Stellarium)</h2>
             <p class="text-lg text-gray-600 dark:text-gray-300 text-center mb-10 max-w-3xl mx-auto">
                 Gunakan peta langit ini untuk melihat konstelasi, planet, dan objek langit lainnya secara *real-time* dari lokasi Bosscha.
             </p>
-            
             <!-- Kontainer untuk iframe agar responsif (rasio 16:9) -->
             <div id="stellarium-container" class="relative w-full max-w-5xl mx-auto rounded-lg overflow-hidden shadow-2xl" style="padding-bottom: 56.25%; height: 0;">
                 <iframe
@@ -163,131 +153,11 @@
             </div>
         </section>
 
-        <!-- Bagian Instrumen -->
-        <section id="instruments" class="page-section hidden min-h-[calc(100vh-64px)] py-16">
-            <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-10">Instrumen Observatorium Bosscha</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                
-                <!-- Kartu Instrumen 1 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-zeiss.jpg" alt="Teleskop Refraktor Ganda Zeiss" class="w-full h-48 object-cover">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Teleskop Refraktor Ganda Zeiss</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Teleskop tertua (1928) di Observatorium Bosscha. Digunakan untuk mengamati bintang ganda visual, fotometri bintang, dan pengamatan komet/planet.
-                        </p>
-                        <!-- Kolom Spesifikasi -->
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Spesifikasi:</h4>
-                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>Tipe:<br> Refraktor Ganda</li>
-                            <li>Diameter:<br> 60 cm (ganda)</li>
-                            <li>Panjang Fokus:<br> 10.8 meter</li>
-                            <li>Fokus Rasio:<br> f/18</li>
-                            <li>Skala Bayangan:<br> 18.4"/mm</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-                
-                <!-- Kartu Instrumen 2 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-stevia.jpg" alt="Teleskop STEVia" class="w-full h-48 object-cover" style="object-position: center 10%;">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Teleskop STEVia</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Digunakan untuk melakukan pengamatan survei pada gugus bintang terbuka untuk mencari eksoplanet dan bintang variabel baru. STEVia juga digunakan dalam pengamatan objek dan peristiwa langit yang berlangsung singkat, seperti supernova dan okultasi bintang.
-                        </p>
-                        <!-- Kolom Spesifikasi -->
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Spesifikasi:</h4>
-                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>Tipe:<br> Reflektor Schmidt-Cassegrain (utama) <br> Refraktor (pemandu)</li>
-                            <li>Diameter:<br> 279 mm (utama) <br> 66 mm (pemandu)</li>
-                            <li>Panjang Fokus:<br> 1760 mm (utama) <br> 388 mm (pemandu)</li>
-                            <li>Rasio Fokal:<br> f/6,3 (utama) <br> f/5.8 (pemandu)</li>
-                            <li>Detektor:<br> Kamera CCD SBIG ST – 8 XME (utama) <br> Kamera CMOS ZWO ASI 120MM (pemandu)</li>
-                            <li>Filter:<br> BVRI (Pita Sempit) dan LRGB (Pita Lebar)</li>
-                            <li>FoV:<br> 26,8 x 17,9 menit busur (utama) <br> 43 x 32,3 menit busur (pemandu)</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-                
-                <!-- Kartu Instrumen 3 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-gao.jpg" alt="Teleskop GAO-ITB RTS" class="w-full h-48 object-cover">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Teleskop GAO-ITB RTS</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Teleskop ini digunakan untuk pengamatan spektroskopi garis emisi komet dan supernova.
-                        </p>
-                        <!-- Kolom Spesifikasi -->
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Spesifikasi:</h4>
-                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>Tipe:<br> Reflektor Schmidt-Cassegrain</li>
-                            <li>Diameter:<br> 279 mm</li>
-                            <li>Panjang Fokus:<br> 2790 mm</li>
-                            <li>Detektor:<br> SBIG ST - 8 XME</li>
-                            <li>Spektrograf:<br> NEO - R1000</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-
-                <!-- Kartu Instrumen 4 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-brt.jpg" alt="Bosscha Robotic Telescope (BRT)" class="w-full h-48 object-cover" style="object-position: center 60%;">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Bosscha Robotic Telescope (BRT)</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Teleskop ini digunakan untuk penelitian, survei, dan deteksi planet di bintang lain. Selain itu juga acap kali digunakan untuk penelitian asteroid berjarak dekat dengan bumi. Studi lain yang juga menggunakan teleskop ini adalah penelitian dan pengamatan berkala bintang variabel.                        </p>
-                        <!-- Kolom Spesifikasi -->
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Spesifikasi:</h4>
-                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>Tipe:<br> Corrected Dall - Kirkham</li>
-                            <li>Tabung Utama:<br> Planewave CDK 14</li>
-                            <li>Diameter:<br> 14 inci (0.36 m)</li>
-                            <li>Panjang Fokus:<br> 2592 mm</li>
-                            <li>Rasio Fokal:<br> f/7.2</li>
-                            <li>Detektor:<br> Kamera CCD FLI PL 11002</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-
-                <!-- Kartu Instrumen 5 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-bamberg.jpg" alt="Teleskop Bamberg" class="w-full h-48 object-cover">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Teleskop Bamberg</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Teleskop Bamberg digunakan untuk pengamatan kurva cahaya bintang-bintang variabel, serta fotometri gerhana bintang, misalnya pengamatan kurva cahaya bintang ganda Capricorni. Teleskop ini juga digunakan untuk pengamatan matahari dan permukaan bulan. Teleskop Bamberg juga sering digunakan untuk pendidikan publik, misalnya pada Malam Umum.
-                        </p>
-                        <!-- Kolom Spesifikasi -->
-                        <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Spesifikasi:</h4>
-                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>Diameter Lensa:<br> 37 cm</li>
-                            <li>Panjang Fokus:<br> 700 cm</li>
-                            <li>Fokus Rasio:<br> f/18.9</li>
-                            <li>Alat Tambahan:<br> Filter Matahari</li>
-                        </ul>
-                    </figcaption>
-                </figure>
-
-                <!-- Kartu Instrumen 6 -->
-                <figure class="instrument-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <img src="images/teleskop-surya.jpg" alt="Teleskop Surya" class="w-full h-48 object-cover">
-                    <figcaption class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Teleskop Surya</h3>
-                        <p class="text-gray-700 dark:text-gray-300 mb-4">
-                            Teleskop Surya atau Teleskop Matahari ini merupakan set teleskop dijital, yang terdiri dari 3 buah telekop Coronado dengan 3 filter yang berbeda, serta sebuah teleskop proyeksi citra Matahari yang sepenuhnya dibuat sendiri. Fasilitas ini dapat terealisasi berkat sumbangan dari Kementerian Pendidikan, Sains, dan Kebudayaan, Negeri Belanda, Leids Kerkhoven-Bosscha Fonds, Departemen Pendidikan Nasional, serta Kementerian Negara Riset dan Teknologi. 
-                            Fasilitas baru ini dapat digunakan untuk penelitian, pendidikan, maupun untuk pengabdian kepada masyarakat. Dari sisi layanan publik, fasilitas ini akan menjadi bagian penting dari pendidikan informal yang dapat diberikan oleh Observatorium Bosscha kepada publik. Semua ini merupakan wujud dari upaya Observatorium Bosscha memodernisasi dirinya sambil tetap menjaga sejarahnya. Fasilitas teleskop surya ini berdiri pada lahan bekas teleskop transit yang sudah tidak digunakan lagi, dan pernah digunakan sebagai titik pengamatan topografi. 
-                                Bekas titik tersebut masih dipertahankan di dalam interior gedung teleskop. Gedung ini dirancang oleh Dr. Wijaya Martokusumo dari SAPPK-ITB.
-                        </p>
-                    </figcaption>
-                </figure>
-            
-            </div>
-            <br>
-            <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-10">Dan lainnya...</h3>
+        <!-- Page Instrumen -->
+        <section id="instruments" class="page-section hidden container mx-auto px-4 pt-32 pb-16 min-h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         </section>
         
-        <section id="lokasi" class="page-section hidden min-h-[calc(100vh-64px)] py-16">
+        <section id="lokasi" class="page-section hidden min-h-[calc(100vh-64px)] pt-32 pb-16">
             <h2 class="text-3xl font-bold text-center text-white mb-10">Lokasi & Akses Kunjungan</h2>
             
             <!-- Kontainer konten dengan background transparan gelap agar terbaca -->
@@ -330,8 +200,11 @@
         </div>
     </footer>
 
+    <!--Load Firebase SDK-->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-    <!-- Blok JavaScript Eksternal -->
+    <!-- Load Javascript -->
     <script src="script.js" defer></script>
 
 </body>

@@ -1,180 +1,150 @@
-/* Mengatasi 'loncatan' saat header menjadi sticky */
-body {
-    padding-top: 64px; /* Sesuaikan dengan tinggi header Anda */
-}
-header {
-    height: 64px; /* Pastikan tinggi header konsisten */
-}
-
-/* --- PERBAIKAN: Kelas untuk mengunci scroll body --- */
+/* Pengunci scroll untuk body saat interaksi timeline */
 body.noscroll {
     overflow: hidden;
 }
 
-/* Aturan untuk Dark Mode */
-.dark body {
-    background-color: #111827; /* gray-900 */
-    color: #e5e7eb; /* gray-200 */
-}
-.dark header {
-    background-color: rgba(17, 24, 39, 0.8); /* gray-900 dengan transparansi */
-}
-.dark .page-section {
-    background-color: #1f2937; /* gray-800 */
-}
-.dark .stellarium-placeholder {
-    background-color: #374151; /* gray-700 */
-    border-color: #4b5563; /* gray-600 */
-}
-.dark .instrument-card {
-     background-color: #374151; /* gray-700 */
-     border-color: #4b5563; /* gray-600 */
-}
-.dark #timeline-display {
-    background-color: #374151; /* gray-700 */
-    border-color: #4b5563; /* gray-600 */
-}
+/* --- TATA SURYA TIMELINE --- */
 
-/* CSS untuk menyembunyikan/menampilkan halaman (tab) */
-.page-section.hidden {
-    display: none;
-}
-
-/* --- CSS Linimasa Tata Surya (Scrollytelling) --- */
-
-/* Kontainer luar: frame & background gradien (TIDAK BERPUTAR) */
+/* Kontainer luar: frame & background gradien */
 .solar-system-container {
-    background: radial-gradient(ellipse at center, #374151 0%, #111827 70%); /* gray-700 to gray-900 */
-    border-radius: 0.5rem;
     position: relative;
     width: 100%;
-    height: 400px; /* Tinggi default untuk mobile */
-    cursor: ns-resize; /* Menandakan bisa di-scroll vertikal */
-    overflow: hidden; /* Sembunyikan orbit yg keluar frame */
+    /* Kita set rasio aspek 1:1 (persegi). 
+      padding-bottom: 100% berarti tinggi = 100% dari lebar.
+    */
+    padding-bottom: 100%; 
+    height: 0; /* Trik rasio aspek */
+    
+    /* Background gradien angkasa */
+    background: radial-gradient(
+        ellipse at center,
+        #1e3a8a 0%,    /* biru tua di tengah */
+        #111827 50%,   /* abu-abu sangat tua */
+        #000000 70%    /* hitam di pinggir */
+    );
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
-@media (min-width: 768px) { 
-    .solar-system-container {
-        /* PERBAIKAN: 
-           Tingginya disesuaikan agar pas dengan orbit terluar (500px) + padding. 
-        */
-        height: 550px; 
-    }
-}
-
-.dark .solar-system-container {
-    background: radial-gradient(ellipse at center, #2d3748 0%, #1a202c 70%);
-}
-
-/* Kontainer dalam: isi tata surya (BERPUTAR) */
+/* Kontainer dalam: Ini yang berputar (di-target oleh JS) */
 #solar-system-rotator {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Transisi untuk putaran yang mulus */
+    /* Transisi agar putarannya mulus */
     transition: transform 1s ease-in-out;
-    transform-origin: center center;
 }
 
+/* Matahari di tengah */
 .sun {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    background-color: #facc15; /* yellow-400 */
+    width: 12%; /* 12% dari kontainer */
+    height: 12%;
+    background-color: #facc15; /* Kuning */
     border-radius: 50%;
-    box-shadow: 0 0 40px 10px rgba(251, 191, 36, 0.7);
-    z-index: 10;
+    box-shadow: 0 0 40px #facc15, 0 0 80px #facc15;
+    transform: translate(-50%, -50%);
+    z-index: 20;
 }
 
+/* Garis orbit (putus-putus) */
 .orbit {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Posisi dasar */
+    transform-origin: center center;
     border: 1px dashed rgba(255, 255, 255, 0.2);
     border-radius: 50%;
+    /* translate(-50%, -50%) agar berpusat */
+    transform: translate(-50%, -50%);
 }
 
+/* PENTING: Kontainer Planet (yang di-rotate oleh JS) 
+  Ini adalah 'lengan' tak terlihat yang memegang planet.
+*/
 .planet-container {
-    /* Posisikan di satu titik di orbit, misal jam 3 (kanan) */
     position: absolute;
-    top: 50%;
-    left: 100%; 
-    transform: translate(-50%, -50%); /* Pusatkan di titik orbit */
+    top: 0; /* Mulai dari pojok kiri atas orbit */
+    left: 0;
+    width: 100%; /* Sama lebarnya dengan orbit */
+    height: 100%; /* Sama tingginya dengan orbit */
+    transform-origin: center center; /* Berputar pada pusat */
+    transition: transform 1s ease-in-out;
 }
 
+/* PENTING: Planet (Visualnya) 
+  Ini adalah lingkaran berwarna.
+*/
 .planet {
-    width: 20px;
-    height: 20px;
+    position: absolute;
+    /* Posisikan di 'jam 3' dari kontainernya */
+    top: 50%; 
+    left: 100%;
+    /* Ukuran planet */
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    z-index: 20;
-    opacity: 0.5; /* Redupkan by default */
+    /* translate(-50%, -50%) agar pusat planet pas di 'jam 3' */
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    /* Opasitas redup (default) */
+    opacity: 0.5;
 }
 
-/* Planet yang aktif akan bersinar dan membesar */
+/* Style untuk planet yang aktif (dinyalakan oleh JS) */
 .planet.active {
     opacity: 1;
-    transform: scale(1.8);
-    box-shadow: 0 0 20px 5px var(--planet-shadow-color, #fff);
+    transform: translate(-50%, -50%) scale(1.5); /* Sedikit membesar */
+    box-shadow: 0 0 15px var(--planet-shadow-color, #fff);
 }
 
-/* Panel Info di Kanan */
+/* --- PANEL INFO TIMELINE --- */
 #timeline-display {
-    /* Style untuk panel info di desktop */
-    position: relative;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-    border: 1px solid #e5e7eb; /* gray-200 */
-    height: 100%; /* Memenuhi tinggi grid */
-    min-height: 400px;
+    background-color: rgba(255, 255, 255, 0.9); /* Putih transparan (Light Mode) */
+    border: 1px solid rgba(229, 231, 235, 1);
+    border-radius: 12px;
+    padding: 2.5rem; /* Padding besar */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    min-height: 300px; /* Tinggi minimum */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    cursor: ns-resize; /* Menandakan bisa di-scroll vertikal */
 }
 
+/* Style Dark Mode untuk Panel Info */
+.dark #timeline-display {
+    background-color: rgba(31, 41, 55, 0.8); /* Abu-abu gelap transparan (Dark Mode) */
+    border-color: rgba(55, 65, 81, 1);
+}
+
+/* Tahun di Panel Info */
 #timeline-display-year {
-    font-size: 4.5rem; /* 6xl */
-    font-weight: 700; /* bold */
+    font-size: 4rem; /* Sangat besar */
+    font-weight: 700;
     line-height: 1;
-    color: #3b82f6; /* blue-500 */
-    margin-bottom: 1rem;
+    color: #3b82f6; /* Biru */
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
 }
 
+/* Teks deskripsi di Panel Info */
 #timeline-display-desc {
-    font-size: 1.125rem; /* xl */
-    line-height: 1.75; /* leading-7 */
-    color: #374151; /* gray-700 */
+    font-size: 1.125rem; /* Sedikit lebih besar */
+    color: #4b5563; /* Abu-abu (Light Mode) */
+    transition: all 0.3s ease;
 }
 
+/* Style Dark Mode untuk teks Panel Info */
+.dark #timeline-display-year {
+    color: #60a5fa; /* Biru muda */
+}
 .dark #timeline-display-desc {
-    color: #d1d5db; /* gray-300 */
+    color: #d1d5db; /* Abu-abu muda */
 }
 
-/* Tampilan mobile: panel info di bawah tata surya */
-@media (max-width: 767px) {
-    #timeline-display {
-        margin-top: 2rem; /* Jarak dari tata surya */
-        min-height: 200px; /* Lebih pendek di mobile */
-        padding: 1.5rem;
-    }
-    #timeline-display-year {
-        font-size: 3rem; /* 4xl */
-    }
-    #timeline-display-desc {
-        font-size: 1rem; /* base */
-    }
-}
-
-#imagev-container {
-    object-position: 75% 0%;
-}
